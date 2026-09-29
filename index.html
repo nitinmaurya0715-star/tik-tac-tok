@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A modern, accessible Tic Tac Toe game for two players or versus the computer." />
+  <title>Neon Grid — Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="aurora aurora-one" aria-hidden="true"></div>
+  <div class="aurora aurora-two" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Neon Grid home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span><strong>NEON</strong> GRID</span>
+    </a>
+    <div class="header-actions">
+      <button class="icon-button" id="themeToggle" type="button" aria-label="Switch to light theme" title="Toggle theme">
+        <span class="theme-icon" aria-hidden="true">☼</span>
+      </button>
+      <button class="icon-button" id="soundToggle" type="button" aria-label="Mute sound" title="Toggle sound">
+        <span class="sound-icon" aria-hidden="true">♪</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="intro" aria-labelledby="pageTitle">
+      <p class="overline">CLASSIC GAME · REIMAGINED</p>
+      <h1 id="pageTitle">Tic. Tac. <span>Dominate.</span></h1>
+      <p>Challenge a friend or outsmart the machine. Three in a row takes the crown.</p>
+    </section>
+
+    <section class="game-layout">
+      <aside class="glass setup-card" aria-labelledby="setupTitle">
+        <div class="section-heading">
+          <span class="step">01</span>
+          <div><h2 id="setupTitle">Game setup</h2><p>Choose your match</p></div>
+        </div>
+
+        <fieldset>
+          <legend>Game mode</legend>
+          <div class="segmented" id="modeSelector">
+            <button class="segment active" type="button" data-mode="computer" aria-pressed="true"><span>◈</span>vs Computer</button>
+            <button class="segment" type="button" data-mode="pvp" aria-pressed="false"><span>◎</span>2 Players</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Your symbol</legend>
+          <div class="symbol-picker" id="symbolSelector">
+            <button class="symbol-choice active" type="button" data-symbol="X" aria-pressed="true"><b>X</b><small>First move</small></button>
+            <button class="symbol-choice" type="button" data-symbol="O" aria-pressed="false"><b>O</b><small>Second move</small></button>
+          </div>
+        </fieldset>
+
+        <fieldset id="difficultyField">
+          <legend>Difficulty</legend>
+          <div class="difficulty" id="difficultySelector">
+            <button type="button" data-difficulty="easy" aria-pressed="false">Easy</button>
+            <button class="active" type="button" data-difficulty="medium" aria-pressed="true">Medium</button>
+            <button type="button" data-difficulty="hard" aria-pressed="false">Hard</button>
+          </div>
+          <p class="difficulty-note" id="difficultyNote">Balanced play with smart moves.</p>
+        </fieldset>
+
+        <button class="primary-button" id="startGame" type="button"><span>Start new game</span><b aria-hidden="true">→</b></button>
+        <p class="shortcut-hint"><kbd>R</kbd> Restart <span>·</span> <kbd>M</kbd> Mute <span>·</span> <kbd>1–9</kbd> Move</p>
+      </aside>
+
+      <section class="glass game-card" aria-labelledby="gameTitle">
+        <div class="game-topbar">
+          <div>
+            <p class="status-label">CURRENT TURN</p>
+            <h2 id="gameTitle"><span class="turn-symbol">X</span> <span id="turnText">Your move</span></h2>
+          </div>
+          <span class="live-badge"><i></i> LIVE</span>
+        </div>
+
+        <div class="board-wrap">
+          <div class="board" id="board" role="grid" aria-label="Tic Tac Toe game board"></div>
+          <div class="thinking" id="thinking" aria-live="polite"><i></i><i></i><i></i><span>Computer is thinking</span></div>
+        </div>
+
+        <div class="scoreboard" aria-label="Game scores">
+          <article class="score-item x-score"><span class="score-symbol">X</span><div><small id="xLabel">YOU</small><strong id="scoreX">0</strong></div></article>
+          <article class="score-item draw-score"><span class="score-symbol">—</span><div><small>DRAWS</small><strong id="scoreDraw">0</strong></div></article>
+          <article class="score-item o-score"><span class="score-symbol">O</span><div><small id="oLabel">CPU</small><strong id="scoreO">0</strong></div></article>
+        </div>
+
+        <div class="game-actions">
+          <button class="secondary-button" id="restartGame" type="button"><span aria-hidden="true">↻</span> Restart round</button>
+          <button class="text-button" id="resetScores" type="button">Reset scores</button>
+        </div>
+      </section>
+
+      <aside class="glass stats-card" aria-labelledby="statsTitle">
+        <div class="section-heading compact">
+          <span class="step">02</span>
+          <div><h2 id="statsTitle">Statistics</h2><p>All-time on this device</p></div>
+        </div>
+        <div class="stat-grid">
+          <article><small>GAMES</small><strong id="totalGames">0</strong></article>
+          <article><small>WIN RATE</small><strong id="winRate">0%</strong></article>
+          <article><small>BEST STREAK</small><strong id="bestStreak">0</strong></article>
+          <article><small>CURRENT STREAK</small><strong id="currentStreak">0</strong></article>
+        </div>
+        <div class="progress-block">
+          <div><span>Your progress</span><b id="progressText">0 / 10 wins</b></div>
+          <div class="progress-track"><i id="progressBar"></i></div>
+        </div>
+        <p class="stats-tip"><span>✦</span> Hard mode uses perfect strategy. Can you force a draw?</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer><p>Built for strategic minds <span>·</span> <button id="clearData" type="button">Clear saved data</button></p></footer>
+
+  <dialog class="result-modal" id="resultModal" aria-labelledby="resultTitle">
+    <div class="result-glow" aria-hidden="true"></div>
+    <button class="modal-close" id="closeModal" type="button" aria-label="Close result">×</button>
+    <span class="result-icon" id="resultIcon" aria-hidden="true">✦</span>
+    <p class="overline">ROUND COMPLETE</p>
+    <h2 id="resultTitle">X Wins!</h2>
+    <p id="resultDetail">Winning combination: Top row</p>
+    <div class="modal-actions">
+      <button class="primary-button" id="playAgain" type="button"><span>Play again</span><b aria-hidden="true">↻</b></button>
+      <button class="secondary-button" id="newGameModal" type="button">New game setup</button>
+    </div>
+  </dialog>
+</body>
+</html>
